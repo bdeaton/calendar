@@ -1,6 +1,6 @@
 var FitQuick = window.FitQuick || {}; FitQuick.Tiles = FitQuick.Tiles || {};
 FitQuick.Tiles = {
-	totalMinutes: 480,
+	totalMinutes: 240,
 	
 	init: function(){
 		console.log('totalMinutes',FitQuick.Tiles.totalMinutes);
@@ -12,16 +12,16 @@ FitQuick.Tiles = {
 		var $tiles30 = $('#tiles-30');
 		var $tiles60 = $('#tiles-60');
 		var tilesCountMinutes = FitQuick.Tiles.totalMinutes;
-		var tilesCount15 = tilesCountMinutes / 15;
-		var tilesCount30 = tilesCount15 / 2;
-		var tilesCount60 = tilesCount15 / 4;
+		var tilesCount15 = Math.floor(tilesCountMinutes / 15);
+		var tilesCount30 = Math.floor(tilesCount15 / 2);
+		var tilesCount60 = Math.floor(tilesCount15 / 4);
 		console.log('tilesCountMinutes',tilesCountMinutes);
 		console.log('tilesCount15',tilesCount15);
 		console.log('tilesCount30',tilesCount30);
 		console.log('tilesCount60',tilesCount60);
-		FitQuick.Tiles.createTiles($tiles15, tilesCount15, 15);
-		FitQuick.Tiles.createTiles($tiles30, tilesCount30, 30);
-		FitQuick.Tiles.createTiles($tiles60, tilesCount60, 60);
+		FitQuick.Tiles.createTiles($tiles15, tilesCount15, 15, 'tilesCount15');
+		FitQuick.Tiles.createTiles($tiles30, tilesCount30, 30, 'tilesCount30');
+		FitQuick.Tiles.createTiles($tiles60, tilesCount60, 60, 'tilesCount60');
 		
 		if(type='init'){
 			FitQuick.Tiles.setupDragAndDrop();
@@ -33,15 +33,25 @@ FitQuick.Tiles = {
 		FitQuick.Tiles.setupDrop();
 	},
 	
-	createTiles: function($elm, count, minutes){
+	createTiles: function($elm, count, minutes, section){
 		var html = '';
 		var $countLabel = $elm.find('.tile-count');
 		var $tileContainer = $elm.find('div');
 		console.log('$countLabel',$countLabel.length);
-		for (var i=0;i<count;i++){ 
-			//console.log("tile " + (i + 1) + "<br>");
+		var breakCount = 4;
+		if(section=='tilesCount30'){
+			breakCount = 2;
+		}
+		else if(section=='tilesCount60'){
+			breakCount = 1;
+		}
+		for (var i=0;i<count;i++){
+			console.log("tile " + (i + 1) + "<br>");
 			var tileHtml = FitQuick.Tiles.createTilesHtml(minutes);
 			html += tileHtml;
+			if((i+1)%breakCount==0){
+				html += '<br />';
+			}
 		}
 		$countLabel.text('(' + count + ')');
 		$tileContainer.html(html);
