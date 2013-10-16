@@ -27,7 +27,8 @@ body {
 				.tiles-container .label .tile-count{
 					color:blue;
 				}
-			.tiles-container .tile{
+			.tiles-container .tile,
+			.fc-day-content .tile{
 				width:30px;
 				height:30px;
 				border-radius:4px;
@@ -35,10 +36,12 @@ body {
 				display:inline-block;
 				margin-right:3px;
 			}
-			.tiles-container.type-15 .tile{
+			.type-15 .tile,
+			.tile.type-15{
 				background-color:orange;
 			}
-			.tiles-container.type-30 .tile{
+			.type-30 .tile,
+			.tile.type-30{
 				background-color:red;
 			}
 		

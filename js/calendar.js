@@ -78,15 +78,14 @@ FitQuick.Tiles = {
 			drop: function( event, ui ) {
 				var minutes = ui.draggable.data('minutes');
 				console.log('minutes',minutes);
-				$( this )
-				//          .addClass( "ui-state-highlight" )
-				//.css('background-color',color)
+				$(this)
 				.find( "p" )
 				.html( "Dropped!" );
 				var myCalendar = $('#calendar');
 				var dateVal = $(this).data('date');
 				console.log('dateVal',dateVal);
 				var date = new Date(dateVal);
+				/*
 				var myEvent = {
 					title: "Training",
 					allDay: true,
@@ -94,6 +93,8 @@ FitQuick.Tiles = {
 					end: new Date(2013, date.getMonth(), date.getDate() + 1, 16, 30)
 				};
 				myCalendar.fullCalendar('renderEvent', myEvent);
+				//*/
+				FitQuick.Tiles.addDayTile($(this),minutes);
 				FitQuick.Tiles.updateHoursCount(minutes,'drop');
 			},
 			out: function( event, ui ) {
@@ -104,6 +105,11 @@ FitQuick.Tiles = {
 				.html( "UNdropped!" );
 			}
 		});
+	},
+	
+	addDayTile:function($day, type){
+		var $dayContent = $day.find('.fc-day-content');
+		$dayContent.append('<em class="tile type-' + type + '" data-minutes="' + type + '"></em>');
 	},
 	
 	updateHoursCount:function(minutes, type){
