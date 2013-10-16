@@ -1,0 +1,103 @@
+
+body {
+	margin-top: 40px;
+	text-align: center;
+	font-size: 13px;
+	font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+	}
+
+		
+	#available-tiles{
+		width:200px;
+		float:left;
+		position:relative;
+		z-index:1;
+		display:block;
+		margin-right:100px;
+	}
+		.tiles-container{
+			outline:1px solid gray;
+			margin-bottom:10px;
+		}
+			.tiles-container .label{
+				width:100%;
+				clear:both;
+				display:block;
+			}
+				.tiles-container .label .tile-count{
+					color:blue;
+				}
+			.tiles-container .tile{
+				width:30px;
+				height:30px;
+				border-radius:4px;
+				background-color:green;
+				display:inline-block;
+				margin-right:3px;
+			}
+			.tiles-container.type-15 .tile{
+				background-color:orange;
+			}
+			.tiles-container.type-30 .tile{
+				background-color:red;
+			}
+		
+		
+		
+	#boxes{
+		width:200px;
+		float:left;
+		position:relative;
+		z-index:1;
+	}
+		#boxes li{
+			display:block;
+			width:30px;
+			height:30px;
+			border-radius:4px;
+			clear:both;
+			margin-bottom:10px;
+		}
+		#box-yellow{
+			background-color:yellow;
+		}
+		#box-red{
+			background-color:red;
+		}
+		#box-green{
+			background-color:green;
+		}
+		
+	#drops{
+		width:200px;
+		float:left;
+		display:none;
+	}
+	.drop{
+		display:block;
+		width:150px;
+		height:150px;
+		clear:both;
+		border:1px solid red;
+	}
+
+	#calendar {
+		width: 900px;
+		margin: 0 auto;
+		float:left;
+	}
+
+
+
+	
+	
+	
+	
+	
+  #draggable { width: 100px; height: 100px; padding: 0.5em; float: left; margin: 10px 10px 10px 0; }
+  #droppable { width: 150px; height: 150px; padding: 0.5em; float: left; margin: 10px; }
+  .ui-state-highlight{
+  	background:none;
+  	background-color:#0f0;
+  }
+

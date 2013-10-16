@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel='stylesheet' href='css/cupertino/theme.css' />
+	<link href='css/fullcalendar.css' rel='stylesheet' />
+	<link href='css/fullcalendar.print.css' rel='stylesheet' media='print' />
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+	<link rel='stylesheet' href='css/calendar.css' />
+
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+	
+	<script src='js/fullcalendar/fullcalendar.min.js'></script>
+<script>
+
+
+$(document).ready(function() {
+	var date = new Date();
+	var d = date.getDate();
+	var m = date.getMonth();
+	var y = date.getFullYear();
+
+	$('#calendar').fullCalendar({
+		dayClick: function (date, allDay, jsEvent, view) {
+			console.log(date);
+			return false;
+		},
+	
+		theme: true,
+		header: {
+			left: 'prev,next today',
+			center: 'title',
+			right: 'month,agendaWeek,agendaDay'
+		},
+		editable: true,
+		events: [
+		/*
+			{
+				title: 'Training',
+				start: new Date(y, m, 1, 16, 0),
+				end: new Date(y, m, 1, 17, 0),
+				allDay: false
+			}
+			*/
+		]
+	});
+
+
+		
+});
+
+</script>
+</head>
+
+<body>
+
+<div id="available-tiles">
+	<div class="tiles-container type-15" id="tiles-15">
+		<span class="label">15-minute blocks <span class="tile-count"></span></span>
+		<div></div>
+	</div>
+	<div class="tiles-container type-30" id="tiles-30">
+		<span class="label">30-minute blocks <span class="tile-count"></span></span>
+		<div></div>
+	</div>
+	<div class="tiles-container type-60" id="tiles-60">
+		<span class="label">60-minute blocks <span class="tile-count"></span></span>
+		<div></div>
+	</div>
+</div>
+<div id="drops">
+	<div class="drop">
+		<p>Drop here!</p>
+	</div>
+	<div class="drop">
+		<p>Drop here!</p>
+	</div>
+</div>
+<div id='calendar'></div>
+
+<script>
+$(function() {
+    $('table.fc-border-separate').sortable();
+  });
+</script>
+<script src="js/calendar.js"></script>
+</body>
+</html>
