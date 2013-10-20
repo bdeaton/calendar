@@ -4,7 +4,23 @@ FitQuick.Tiles = {
 	
 	init: function(){
 		console.log('totalMinutes',FitQuick.Tiles.totalMinutes);
+		FitQuick.Tiles.setupData();
+		FitQuick.Tiles.setupHandlers();
 		FitQuick.Tiles.setupTiles('init');
+	},
+	
+	setupData: function(){
+		var tileData = FitQuick.Tiles.Data = {};
+		tileData.days = {};
+	},
+	
+	setupHandlers: function(){
+		console.log('setupHandlers');
+		$('body').on('click','.tile-close',function(){
+			var $this = $(this);
+			var $parentTile = $this.parents('.tile');
+			FitQuick.Tiles.handleTileRemove($parentTile);
+		});
 	},
 	
 	setupTiles: function(type){
@@ -46,7 +62,7 @@ FitQuick.Tiles = {
 			breakCount = 1;
 		}
 		for (var i=0;i<count;i++){
-			console.log("tile " + (i + 1) + "<br>");
+			//console.log("tile " + (i + 1) + "<br>");
 			var tileHtml = FitQuick.Tiles.createTilesHtml(minutes);
 			html += tileHtml;
 			if((i+1)%breakCount==0){
@@ -59,15 +75,16 @@ FitQuick.Tiles = {
 	
 	createTilesHtml: function(minutes){
 		var html = '<em class="tile" data-minutes="' + minutes + '"></em>';
+		//html = '<em class="tile" data-minutes="' + minutes + '"><i class="tile-close"><span>x</span></i></em>';	//uncomment to see close button on load. x alignment will be a bit off though
 		return html;
 	},
 	
 	setupDrag: function(){
 		console.log('setupDrag');
 	    $( "em.tile" ).draggable({
-		helper: 'clone',
-		cursor: 'move',
-		tolerance: 'fit'    
+			helper: 'clone',
+			cursor: 'move',
+			tolerance: 'fit'    
 	    });
 	
 	},
@@ -78,9 +95,9 @@ FitQuick.Tiles = {
 			drop: function( event, ui ) {
 				var minutes = ui.draggable.data('minutes');
 				console.log('minutes',minutes);
-				$(this)
-				.find( "p" )
-				.html( "Dropped!" );
+				FitQuick.Tiles.updateBodyStyle('drop');
+				
+				$(this).find("p").html( "Dropped!" );
 				var myCalendar = $('#calendar');
 				var dateVal = $(this).data('date');
 				console.log('dateVal',dateVal);
@@ -109,9 +126,42 @@ FitQuick.Tiles = {
 	
 	addDayTile:function($day, type){
 		var $dayContent = $day.find('.fc-day-content');
-		$dayContent.append('<em class="tile type-' + type + '" data-minutes="' + type + '"></em>');
+		$dayContent.append('<em class="tile type-' + type + '" data-minutes="' + type + '"><i class="tile-close"><span>x</span></i></em>');
+		FitQuick.Tiles.updateTileData($day,type,'add');
 	},
 	
+	updateTileData:function($day,type,method){
+		console.log('updateTileData');
+		var dateVal = $day.data('date');
+		var tilesData = FitQuick.Tiles.Data;
+		tilesData[dateVal] = tilesData[dateVal] || {};
+		console.log(type);
+		console.log(typeof(type));
+		if(method=='add'){
+			tilesData[dateVal][type] = (tilesData[dateVal][type] + 1) || 1;
+		}
+		else if(method=='remove'){
+			tilesData[dateVal][type] = (tilesData[dateVal][type] - 1);
+		}
+		console.log(FitQuick.Tiles.Data[dateVal]);
+	},
+	
+	updateBodyStyle:function(method){
+		var $body = $('body');
+		if(method=='drop'){
+			$body.css('cursor','');
+		}
+	},
+
+	handleTileRemove:function($parentTile){
+		var $this = $parentTile;
+		var $day = $this.parents('.fc-day');
+		var minutes = $this.data('minutes');
+		FitQuick.Tiles.updateTileData($day,minutes,'remove');
+		FitQuick.Tiles.updateHoursCount(minutes,'remove');
+		$this.remove();
+	},
+
 	updateHoursCount:function(minutes, type){
 		console.log('updateHoursCount',minutes);
 		console.log('type',type);
@@ -119,6 +169,9 @@ FitQuick.Tiles = {
 		var newTotalMinutes = originalTotalMinutes;
 		if(type=='drop'){
 			newTotalMinutes =  (originalTotalMinutes - minutes);
+		}
+		else if(type=='remove'){
+			newTotalMinutes =  (originalTotalMinutes + minutes);
 		}
 		FitQuick.Tiles.totalMinutes = newTotalMinutes;
 		console.log('newTotalMinutes',newTotalMinutes);
