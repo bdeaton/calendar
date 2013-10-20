@@ -81,7 +81,7 @@ FitQuick.Tiles = {
 	
 	setupDrag: function(){
 		console.log('setupDrag');
-	    $( "em.tile" ).draggable({
+	    $( "#available-tiles em.tile" ).draggable({
 			helper: 'clone',
 			cursor: 'move',
 			tolerance: 'fit'    
